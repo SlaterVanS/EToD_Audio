@@ -3,6 +3,8 @@
 #include <thread>
 #include <chrono>
 
+using namespace std;
+
 int main()
 {
 	// Initialize the audio engine
@@ -36,11 +38,11 @@ int main()
 	float playFrequency = 3.0f; // play sounds every 3 seconds
 	float timer = playFrequency;
 
-	std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now();
+	chrono::steady_clock::time_point lastTime = chrono::steady_clock::now();
 	while (true)
 	{
-		std::chrono::steady_clock::time_point currentTime = std::chrono::steady_clock::now();
-		std::chrono::duration<float> delta = currentTime - lastTime;
+		chrono::steady_clock::time_point currentTime = chrono::steady_clock::now();
+		chrono::duration<float> delta = currentTime - lastTime;
 		lastTime = currentTime;
 
 		if (timer < 0.0f)
@@ -62,7 +64,7 @@ int main()
 
 		timer -= delta.count();
 
-		using namespace std::literals::chrono_literals;
-		std::this_thread::sleep_for(5ms);
+		using namespace literals::chrono_literals;
+		this_thread::sleep_for(5ms);
 	}
 }

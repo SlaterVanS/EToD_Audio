@@ -18,6 +18,8 @@
 #include "vorbis/codec.h"
 #include "vorbis/vorbisfile.h"
 
+using namespace std;
+
 namespace ETOD {
 
 	static ALCdevice* s_AudioDevice = nullptr;
@@ -28,7 +30,7 @@ namespace ETOD {
 
 	static bool s_DebugLog = true;
 
-#define ETOD_LOG(x) std::cout << "[EToD Audio]  " << x << std::endl
+#define ETOD_LOG(x) cout << "[EToD Audio]  " << x << endl
 
 	// Currently supported file formats
 	enum class AudioFileFormat
@@ -38,10 +40,10 @@ namespace ETOD {
 		MP3
 	};
 
-	static AudioFileFormat GetFileFormat(const std::string& filename)
+	static AudioFileFormat GetFileFormat(const string& filename)
 	{
-		std::filesystem::path path = filename;
-		std::string extension = path.extension().string();
+		filesystem::path path = filename;
+		string extension = path.extension().string();
 
 		if (extension == ".ogg")  return AudioFileFormat::Ogg;
 		if (extension == ".mp3")  return AudioFileFormat::MP3;
@@ -68,7 +70,7 @@ namespace ETOD {
 
 		OggVorbis_File vf;
 		if (ov_open_callbacks(f, &vf, NULL, 0, OV_CALLBACKS_NOCLOSE) < 0)
-			std::cout << "Could not open ogg stream\n";
+			cout << "Could not open ogg stream\n";
 
 		// Useful info
 		vorbis_info* vi = ov_info(&vf, -1);
@@ -173,7 +175,7 @@ namespace ETOD {
 		}
 
 		if (alGetError() != AL_NO_ERROR)
-			std::cout << "Failed to setup sound source" << std::endl;
+			cout << "Failed to setup sound source" << endl;
 
 		return result;
 	}
@@ -194,7 +196,7 @@ namespace ETOD {
 	void Audio::Init()
 	{
 		if (InitAL(s_AudioDevice, nullptr, 0) != 0)
-			std::cout << "Audio device error!\n";
+			cout << "Audio device error!\n";
 
 		PrintAudioDeviceInfo();
 
